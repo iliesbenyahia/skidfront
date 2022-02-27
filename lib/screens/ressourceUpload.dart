@@ -1,10 +1,12 @@
-
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/menu.dart';
 import 'package:file_picker/file_picker.dart';
-
-
+import 'package:dio/dio.dart';
+import 'package:mime/mime.dart';
+import '../helpers/fileHelper.dart';
 
 class ressourceUpload extends StatefulWidget {
   const ressourceUpload({Key? key}) : super(key: key);
@@ -32,11 +34,22 @@ class _ressourceUploadState extends State<ressourceUpload> {
                 allowedExtensions:  ['jpg', 'pdf', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
               );
               file = result!.files.first;
-              print('Bytes : ${file!.bytes}');
-              print('Size : ${file!.size}');
-              print('Extension : ${file!.extension}');
-              print('Path : ${file!.path}');
-              print('Name : ${file!.name}');
+              fileHelper.upload(file);
+
+              // print('Bytes : ${file!.bytes}');
+              // print('Size : ${file!.size}');
+              // print('Extension : ${file!.extension}');
+              // print('Path : ${file!.path}');
+              // print('Name : ${file!.name}');
+              // print(lookupMimeType(file!.path!));
+              // var dio = Dio();
+              // final response = await dio.post('http://10.0.2.2:3000/ressources/upload', data: {'fileName' : file!.name, 'fileType' : file!.path!});
+              // var data = response;
+              // print(data);
+              // var dio = Dio();
+              // final response = await dio.get('http://10.0.2.2:3000/user');
+              // var data = response.data[0]["firstName"];
+              // print(data);
             },
             child: Text("Choisir un fichier"),
           )
