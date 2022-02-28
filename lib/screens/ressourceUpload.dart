@@ -34,8 +34,9 @@ class _ressourceUploadState extends State<ressourceUpload> {
                 allowedExtensions:  ['jpg', 'pdf', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
               );
               file = result!.files.first;
-              fileHelper.upload(file);
 
+              fileHelper.upload(file);
+              print("issou");
               // print('Bytes : ${file!.bytes}');
               // print('Size : ${file!.size}');
               // print('Extension : ${file!.extension}');

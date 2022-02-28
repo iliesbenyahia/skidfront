@@ -38,6 +38,7 @@ dependencies:
   dio: ^4.0.4
   mime: ^1.0.1
   http: ^0.13.4
+  file: ^6.1.2
 
 dev_dependencies:
   flutter_test:
