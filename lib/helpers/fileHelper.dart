@@ -9,21 +9,9 @@ import 'package:mime/mime.dart';
 import 'dart:io' as io;
 import 'dart:async' as io;
 import 'apiHelper.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:http_parser/http_parser.dart';
 
 class fileHelper{
-
-  static Future<void> writeToFile(Uint8List data, String filename, String fileExtension) async{
-
-    Directory tempDir = await getTemporaryDirectory();
-    String tempPath = tempDir.path;
-    tempPath += filename+fileExtension;
-    print("issoudes : ");
-    print(tempPath);
-    //return File(tempPath).writeAsBytes(
-        //buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
-  }
 
   static Future<Response> getSignedURL(file) async{
     var dio = Dio();
@@ -32,21 +20,41 @@ class fileHelper{
 
   }
 
-  static upload(file) async {
-    var dio = Dio();
-     final res = await getSignedURL(file);
-     print(res.data);
-     print(res.data["signedRequest"]);
-
-
-    var url = Uri.parse(res.data["signedRequest"]);
-    var response = await http.put(url, body: file.bytes);
+  static upload(uploadFile) async {
+    final res = await getSignedURL(uploadFile);
+    //print(res.data);
+    //print(res.data["signedRequest"]);
+     if(kIsWeb) {
+       var url = Uri.parse(res.data["signedRequest"]);
+       var response = await http.put(url, body: uploadFile.bytes);
+     }
+     else{
+       var uploadURL = res.data["signedRequest"];
+       var uploadFileURL = res.data["url"];
+       var file = File(uploadFile.path);
+       var dio = new Dio();
+       await dio.put(
+         uploadURL,
+         data: file.openRead(),
+         options: Options(
+           contentType: lookupMimeType(uploadFile.path),
+           headers: {
+             "Content-Length": file.lengthSync(),
+           },
+         ),
+         onSendProgress: (int sentBytes, int totalBytes) {
+           double progressPercent = sentBytes / totalBytes * 100;
+           if(progressPercent == 100){
+             print("ISSOUUPLOADED");
+           }
+           print("$progressPercent %");
+         },
+       );
+     }
     //print('Response status: ${response.statusCode}');
     //print('Response body: ${response.body}');
 
     //print(await http.read(Uri.parse('https://example.com/foobar.txt')));
-
-
 
      /*
     var request = new http.MultipartRequest("PUT", Uri.parse(res.data["signedRequest"]));
