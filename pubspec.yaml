@@ -39,6 +39,7 @@ dependencies:
   mime: ^1.0.1
   http: ^0.13.4
   file: ^6.1.2
+  path_provider: ^2.0.9
 
 dev_dependencies:
   flutter_test:

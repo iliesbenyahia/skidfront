@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 //En environnement de dev, en local, flutter web
-class API{
-  String mode = "dev";
-  String port = "3000";
+String mode = "dev";
+String port = "3000";
 
-  String getBaseURL(){
+class API{
+
+
+  static String getBaseURL(){
     String url = "";
 
     switch(mode){
@@ -13,7 +15,7 @@ class API{
           url = "http://localhost:"+port;
         }
         else{
-          url = "http://10.0.2.2:3000"+port;
+          url = "http://10.0.2.2:"+port;
         }
       }
       break;
@@ -23,6 +25,12 @@ class API{
       break;
     }
     return url;
+  }
+
+  static String getUrlWithRoute(String route){
+    print(mode);
+    print(getBaseURL());
+    return getBaseURL()+"/"+route;
   }
 
 

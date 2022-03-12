@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:mime/mime.dart';
 import '../helpers/fileHelper.dart';
+import '../helpers/apiHelper.dart';
 
 class ressourceUpload extends StatefulWidget {
   const ressourceUpload({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _ressourceUploadState extends State<ressourceUpload> {
             onPressed: () async {
               final result = await FilePicker.platform.pickFiles(
                 type: FileType.custom,
-                allowedExtensions:  ['jpg', 'pdf', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
+                allowedExtensions:  ['pdf', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
               );
               file = result!.files.first;
 
@@ -41,7 +42,7 @@ class _ressourceUploadState extends State<ressourceUpload> {
               // print('Size : ${file!.size}');
               // print('Extension : ${file!.extension}');
               // print('Path : ${file!.path}');
-              // print('Name : ${file!.name}');
+              print('Name : ${file!.name}');
               // print(lookupMimeType(file!.path!));
               // var dio = Dio();
               // final response = await dio.post('http://10.0.2.2:3000/ressources/upload', data: {'fileName' : file!.name, 'fileType' : file!.path!});
