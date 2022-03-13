@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../components/menu.dart';
 import '../components/ressourceCategories.dart';
+import '../components/ressourceRelations.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:dio/dio.dart';
 import 'package:mime/mime.dart';
@@ -29,7 +30,8 @@ class _ressourceUploadState extends State<ressourceUpload> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Expanded(child: ressourceCategories()),
+          Row(children: [ Expanded(child: ressourceCategories())],),
+          Row(children: [ressourcesRelationships()],),
           ElevatedButton(
             onPressed: () async {
               final result = await FilePicker.platform.pickFiles(

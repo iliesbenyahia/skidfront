@@ -1,15 +1,20 @@
 import 'dart:convert';
-
+//import 'package:smart_select/smart_select.dart';
 import 'package:flutter/material.dart';
 import '../components/logo.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'dart:async';
 import '../helpers/apiHelper.dart';
 import 'package:http/http.dart' as http;
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+
 
 Future<String> fetchCategories() async {
 
   late String? data;
+
+
+
   final response = await http
       .get(Uri.parse(API.getUrlWithRoute("categories")));
   if (response.statusCode == 200) {
@@ -54,7 +59,9 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
           return Text("issou");
         }
         else {
+
           var data = json.decode(projectSnap.data.toString()) ;
+
           List<Map<String, dynamic>> categs = [];
           if(data != null) {
             for (var categ in data) {
@@ -64,6 +71,7 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
               });
             }
           }
+
           return SelectFormField(
             type: SelectFormFieldType.dropdown, // or can be dialog
             initialValue: '1',
@@ -75,6 +83,8 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
             }),
             onSaved: (val) => print(val),
           );
+
+
         }
       },
       future: fetchCategories(),
