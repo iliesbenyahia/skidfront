@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:skidressourcesrel/screens/login.dart';
 import 'package:skidressourcesrel/screens/home.dart';
 import 'package:skidressourcesrel/screens/ressourceUpload.dart';
+import 'data/ressourceUploadForm.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,19 +15,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      initialRoute: '/login',
-      routes: {
-        '/login' : (context) => const loginScreen(),
-        '/home' : (context) => const homeScreen(),
-        '/upload' : (context) => const ressourceUpload(),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-        primaryColor: Colors.purple
-      ),
-    );
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: ressourceForm(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+    initialRoute: '/login',
+    routes: {
+    '/login' : (context) => const loginScreen(),
+    '/home' : (context) => const homeScreen(),
+    '/upload' : (context) => const ressourceUpload(),
+    },
+    theme: ThemeData(
+    primarySwatch: Colors.purple,
+    primaryColor: Colors.purple
+    ),
+    ));
   }
 }
 

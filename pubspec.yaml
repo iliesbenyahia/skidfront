@@ -42,6 +42,8 @@ dependencies:
   select_form_field: ^2.2.0
   smart_select: ^4.3.2
   multi_select_flutter: ^4.0.0
+  dropdown_button2: ^1.2.2
+  provider: ^6.0.2
 
 dev_dependencies:
   flutter_test:
