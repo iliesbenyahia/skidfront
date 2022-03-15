@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class ressourceForm extends ChangeNotifier{
   String? title;
   String? description;
+  String? url;
+
   int? categoryID;
   //String? categoryLabel;
   List<int>? relationshipsID;
@@ -32,6 +34,15 @@ class ressourceForm extends ChangeNotifier{
     notifyListeners();
   }
 
+  String? get getUrl {
+    return this.url;
+  }
+
+  set setUrl(String? url) {
+    this.url = url;
+    notifyListeners();
+  }
+
   List<int>? get getRelationshipsID{
     return this.relationshipsID;
   }
@@ -39,6 +50,8 @@ class ressourceForm extends ChangeNotifier{
     this.relationshipsID = relationshipsID;
     notifyListeners();
   }
+
+
 
 
 

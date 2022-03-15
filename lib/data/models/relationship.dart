@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
-import '../helpers/apiHelper.dart';
+import '../../helpers/apiHelper.dart';
 
-class Ressource {
+class Relationship {
 
   late int id;
   late String title;
@@ -28,7 +28,21 @@ class Ressource {
           "description" : description,
         },
     );
+  }
 
+  //Return string of relationships from API Call, needs to be converted
+  Future<String> fetchRelationships() async {
+    late String? data;
+    final response = await http
+        .get(Uri.parse(API.getUrlWithRoute("relationships")));
+    if (response.statusCode == 200) {
+      data = response.body;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load relationships');
+    }
+    return data;
   }
 
 }

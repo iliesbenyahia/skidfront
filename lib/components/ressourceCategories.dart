@@ -8,10 +8,11 @@ import 'package:select_form_field/select_form_field.dart';
 import 'dart:async';
 import '../helpers/apiHelper.dart';
 import 'package:http/http.dart' as http;
+import '../data/models/category.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-
+/*
 Future<String> fetchCategories() async {
   late String? data;
   final response = await http
@@ -23,6 +24,7 @@ Future<String> fetchCategories() async {
   }
   return data;
 }
+*/
 
 class ressourceCategories extends StatefulWidget {
   const ressourceCategories({Key? key}) : super(key: key);
@@ -41,7 +43,7 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
   void initState(){
     // TODO: implement initState
     super.initState();
-    categoriesString = fetchCategories();
+    categoriesString = Category.fetchAllCategories();
   }
 
 
@@ -63,7 +65,7 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
             for (var categ in data) {
               categs.add({
                 'value': categ["id"],
-                'label': categ['title']
+                'label': categ['label']
               });
             }
           }
@@ -77,7 +79,7 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
             onChanged: (val) => setState(() {
               Provider.of<ressourceForm>(context, listen: false).setCategoryID = int.parse(val);
               //print(Provider.of<ressourceForm>(context, listen: false).categoryID);
-              categoriesString = fetchCategories();
+
             }),
             onSaved: (val) => print(val),
           );
@@ -85,7 +87,7 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
 
         }
       },
-      future: fetchCategories(),
+      future: Category.fetchAllCategories(),
     );
 
 
