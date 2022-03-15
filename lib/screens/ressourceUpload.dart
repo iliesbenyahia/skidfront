@@ -1,16 +1,13 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../components/menu.dart';
-import '../components/ressourceCategories.dart';
 import '../components/ressourceRelations.dart';
 import 'package:file_picker/file_picker.dart';
-
-import 'package:dio/dio.dart';
-import 'package:mime/mime.dart';
-import '../helpers/fileHelper.dart';
-import '../helpers/apiHelper.dart';
+import '../components/uploadFormWidgets/ressourceCategories.dart';
+import 'package:provider/provider.dart';
+import 'package:skidressourcesrel/data/ressourceUploadForm.dart';
+import 'package:select_form_field/select_form_field.dart';
+import 'dart:async';
+import '../data/models/category.dart';
 
 class ressourceUpload extends StatefulWidget {
   const ressourceUpload({Key? key}) : super(key: key);
@@ -37,6 +34,9 @@ class _ressourceUploadState extends State<ressourceUpload> {
               border: UnderlineInputBorder(),
               labelText: 'Intitulé de la ressource',
             ),
+            onChanged: (text){
+              Provider.of<ressourceForm>(context, listen: false).setTitle = text;
+            },
           ),
           )]
           ),
@@ -45,6 +45,9 @@ class _ressourceUploadState extends State<ressourceUpload> {
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: TextField(
+                  onChanged: (text) {
+                    Provider.of<ressourceForm>(context, listen: false).description = text;
+                  },
                   maxLines: 8,
                   decoration: InputDecoration.collapsed(hintText: "Description de la ressource (facultative)"),
                 ),
@@ -71,3 +74,4 @@ class _ressourceUploadState extends State<ressourceUpload> {
     );
   }
 }
+

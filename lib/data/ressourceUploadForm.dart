@@ -52,7 +52,16 @@ class ressourceForm extends ChangeNotifier{
   }
 
 
+  clearForm(){
+    this.title = null;
+    this.description = null;
+    this.url = null;
+    this.categoryID = null;
+    this.relationshipsID = null;
+  }
 
-
+  test(){
+    print(this.description);
+  }
 
 }
