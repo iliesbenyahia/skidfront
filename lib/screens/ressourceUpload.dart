@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/menu.dart';
-import '../components/ressourceRelations.dart';
+import '../components/uploadFormWidgets/ressourceRelations.dart';
 import 'package:file_picker/file_picker.dart';
 import '../components/uploadFormWidgets/ressourceCategories.dart';
 import 'package:provider/provider.dart';
