@@ -22,55 +22,63 @@ class _ressourceUploadState extends State<ressourceUpload> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       appBar: AppBar(title: Text("Partage de ressources"),),
       drawer: Menu(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(children: [ Expanded(child:
-          TextFormField(
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Intitulé de la ressource',
-            ),
-            onChanged: (text){
-              Provider.of<ressourceForm>(context, listen: false).setTitle = text;
-            },
-          ),
-          )]
-          ),
-          Row(children: [ Expanded(child: Card(
-              color: Colors.white,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextField(
-                  onChanged: (text) {
-                    Provider.of<ressourceForm>(context, listen: false).description = text;
-                  },
-                  maxLines: 8,
-                  decoration: InputDecoration.collapsed(hintText: "Description de la ressource (facultative)"),
+      body:
+        Consumer<ressourceForm>(builder: (context, uploadForm, child) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(children: [ Expanded(child:
+              TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Intitulé de la ressource',
                 ),
-              )
-          ))],),
-          Row(children: [ Expanded(child: ressourceCategories())],),
-          Row(children: [ Expanded(child: ressourcesRelationships())],),
-          ElevatedButton(
-            onPressed: () async {
-              final result = await FilePicker.platform.pickFiles(
-                type: FileType.custom,
-                allowedExtensions:  ['jpg', 'pdf', 'gif', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
-              );
-              file = result!.files.first;
+                onChanged: (text){
+                  uploadForm.setTitle = text;
+                },
+              ),
+              )]
+              ),
+              Row(children: [ Expanded(child: Card(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextField(
+                      onChanged: (text) {
+                        uploadForm.description = text;
+                      },
+                      maxLines: 8,
+                      decoration: InputDecoration.collapsed(hintText: "Description de la ressource (facultative)"),
+                    ),
+                  )
+              ))],),
+              Row(children: [ Expanded(child: ressourceCategories())],),
+              Row(children: [ Expanded(child: ressourcesRelationships())],),
+              Row(children: [ Text(uploadForm.getFilename! )]),
+              ElevatedButton(
+                onPressed: () async {
+                  final result = await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions:  ['jpg', 'pdf', 'gif', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
+                  );
+                  file = result!.files.first;
+                  uploadForm.setFilename = file!.name;
+                  //print(Provider.of<ressourceForm>(context, listen: false).getFilename);
+                  //fileHelper.upload(file);
+                  //print('Name : ${file!.name}');
+                  // print(lookupMimeType(file!.path!));
+                },
+                child: Text("Choisir un fichier"),
 
-              //fileHelper.upload(file);
-              // print('Name : ${file!.name}');
-              // print(lookupMimeType(file!.path!));
-            },
-            child: Text("Choisir un fichier"),
-          )
-        ],
-      ),
+              ),
+
+            ],
+          );
+        },),
+
     );
   }
 }

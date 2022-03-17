@@ -1,6 +1,8 @@
 import 'dart:convert';
 //import 'package:smart_select/smart_select.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:skidressourcesrel/data/ressourceUploadForm.dart';
 import '../logo.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'dart:async';
@@ -38,7 +40,7 @@ class ressourcesRelationships extends StatefulWidget {
 
 class _ressourcesRelationshipsState extends State<ressourcesRelationships> {
 
-  late Future<List<Map<String, dynamic>>> relationshipString;
+  late Future<List<dynamic>> relationshipsData;
 
 
 
@@ -46,22 +48,56 @@ class _ressourcesRelationshipsState extends State<ressourcesRelationships> {
   void initState(){
     // TODO: implement initState
     super.initState();
-    relationshipString = Relationship.fetchAllRelationships();
-    print(relationshipString);
-    print('zizi');
+    relationshipsData = Relationship.fetchAllRelationships();
+    //print(relationshipString);
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List<dynamic>>(
       builder: (context, projectSnap) {
         if (projectSnap.connectionState == ConnectionState.none &&
             projectSnap.hasData == null) {
-          return Text(""); //todo loading
+          return Text("Loading"); //todo loading
         }
         else{
-          return Text(" issou "); //todo loading
+          //print(projectSnap.data){
+          var data = projectSnap.data;
+          List<MultiSelectItem> items = [];
+          if(projectSnap.data != null) {
+            for (var relationship in data!) {
+                items.add(MultiSelectItem(relationship["value"], relationship["label"]));
+            }
+          }
+
+          return MultiSelectDialogField(items: items,
+            title: Text("Relation(s) concernée(s)"),
+            selectedColor: Colors.purple,
+            decoration: BoxDecoration(
+              color: Colors.purple.withOpacity(0.1),
+              //borderRadius: BorderRadius.all(Radius.circular(40)),
+              // border: Border.all(
+              //   color: Colors.purple,
+              //   width: 2,
+              // ),
+            ),
+            buttonIcon: Icon(
+              Icons.category,
+              color: Colors.purple,
+            ),
+            buttonText: Text(
+              "Type(s) de relations concernée(s)",
+              style: TextStyle(
+                color: Colors.purple[800],
+                fontSize: 16,
+              ),
+            ),
+            onConfirm: (results) {
+              Provider.of<ressourceForm>(context, listen: false).relationshipsID = results.cast<int>();
+              //print(Provider.of<ressourceForm>(context, listen: false).getRelationshipsID);
+              //_selectedAnimals = results;
+            },); //todo loading
         }
 
       },

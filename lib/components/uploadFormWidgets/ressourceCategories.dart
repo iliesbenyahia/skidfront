@@ -38,11 +38,11 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.none &&
             snapshot.hasData == null) {
-            print('project snapshot data is: ${snapshot.data}');
+            //print('project snapshot data is: ${snapshot.data}');
           return Text("issou"); //Todo: changer ça
         }
         else {
-          print(snapshot.data.runtimeType);
+          //print(snapshot.data.runtimeType);
           return SelectFormField(
             type: SelectFormFieldType.dialog, // or can be dialog
             initialValue: Provider.of<ressourceForm>(context, listen: false).getCategoryID.toString(),

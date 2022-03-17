@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 
 class ressourceForm extends ChangeNotifier{
-  String? title;
-  String? description;
-  String? url;
+  String title = "";
+  String description = "";
+  String url = "";
+  String filename = "";
 
   int? categoryID;
   //String? categoryLabel;
-  List<int>? relationshipsID;
+  List<int> relationshipsID = [];
 
   String? get getTitle {
     return this.title;
   }
   set setTitle(String title) {
     this.title = title;
+    notifyListeners();
+  }
+
+  String? get getFilename {
+    return this.filename;
+  }
+  set setFilename(String filename) {
+    this.filename = filename;
     notifyListeners();
   }
 
@@ -38,7 +47,7 @@ class ressourceForm extends ChangeNotifier{
     return this.url;
   }
 
-  set setUrl(String? url) {
+  set setUrl(String url) {
     this.url = url;
     notifyListeners();
   }
@@ -53,15 +62,28 @@ class ressourceForm extends ChangeNotifier{
 
 
   clearForm(){
-    this.title = null;
-    this.description = null;
-    this.url = null;
+    this.title = "";
+    this.filename = "";
+    this.description = "";
+    this.url = "";
     this.categoryID = null;
-    this.relationshipsID = null;
+    this.relationshipsID = [];
   }
 
-  test(){
-    print(this.description);
+
+  isSendable(){
+    bool sendable = true;
+    if(this.title.isEmpty){
+      sendable = false;
+    }
+    if(this.categoryID == null){
+      sendable = false;
+    }
+    if(relationshipsID.length == 0){
+      sendable = false;
+    }
+    return sendable;
   }
+
 
 }

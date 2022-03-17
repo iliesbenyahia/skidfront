@@ -28,8 +28,8 @@ class API{
   }
 
   static String getUrlWithRoute(String route){
-    print(mode);
-    print(getBaseURL());
+    //print(mode);
+    //print(getBaseURL());
     return getBaseURL()+"/"+route;
   }
 
