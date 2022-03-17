@@ -1,10 +1,13 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import '../../helpers/fileHelper.dart';
 
 class ressourceForm extends ChangeNotifier{
   String title = "";
   String description = "";
   String url = "";
   String filename = "";
+  PlatformFile? file;
 
   int? categoryID;
   //String? categoryLabel;
@@ -16,6 +19,16 @@ class ressourceForm extends ChangeNotifier{
   set setTitle(String title) {
     this.title = title;
     notifyListeners();
+  }
+
+  PlatformFile? get getFile{
+    return this.file;
+  }
+
+  set setFile(PlatformFile file){
+      this.file = file;
+      this.filename = file.name;
+      notifyListeners();
   }
 
   String? get getFilename {
@@ -70,8 +83,19 @@ class ressourceForm extends ChangeNotifier{
     this.relationshipsID = [];
   }
 
+  submit() async{
+    if(isSubmittable()){
+      if(this.file != null){
+        if(await fileHelper.upload(this.file)){
 
-  isSendable(){
+        }
+      }
+    }
+    else{
+    }
+  }
+
+   isSubmittable(){
     bool sendable = true;
     if(this.title.isEmpty){
       sendable = false;

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:skidressourcesrel/screens/login.dart';
 import 'package:skidressourcesrel/screens/home.dart';
 import 'package:skidressourcesrel/screens/ressourceUpload.dart';
-import 'data/ressourceUploadForm.dart';
+import 'data/viewmodels/ressourceUploadForm.dart';
 
 void main() {
   runApp(const MyApp());

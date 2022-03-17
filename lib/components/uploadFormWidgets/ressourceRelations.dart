@@ -2,7 +2,7 @@ import 'dart:convert';
 //import 'package:smart_select/smart_select.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skidressourcesrel/data/ressourceUploadForm.dart';
+import 'package:skidressourcesrel/data/viewmodels/ressourceUploadForm.dart';
 import '../logo.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'dart:async';

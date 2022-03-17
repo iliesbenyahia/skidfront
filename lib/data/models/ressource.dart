@@ -1,27 +1,27 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import '../../helpers/apiHelper.dart';
+import '../../helpers/fileHelper.dart';
 
 class Ressource {
 
   late int id;
-  late String title;
+  late String label;
   late String? description;
   late int categoryID;
   late List<int> relationships;
-  late String url;
+  late String? url;
+  late PlatformFile? file;
 
-  create(String title, int categoryID, List<int> relationships, String url, String description) async{
-    this.title = title;
-    this.categoryID = categoryID;
-    this.relationships = relationships;
-    this.url = url;
-    this.description = description;
+  create() async{
+
+    fileHelper.upload(this.file)
     final response = await http.post(Uri.parse(API.getUrlWithRoute("ressources")),
         headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         },
         body: {
-          "title": title,
+          "label": label,
           "categoryID" : categoryID,
           "relationships" : relationships,
           "url" : url,

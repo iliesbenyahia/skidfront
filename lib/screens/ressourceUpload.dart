@@ -4,7 +4,7 @@ import '../components/uploadFormWidgets/ressourceRelations.dart';
 import 'package:file_picker/file_picker.dart';
 import '../components/uploadFormWidgets/ressourceCategories.dart';
 import 'package:provider/provider.dart';
-import 'package:skidressourcesrel/data/ressourceUploadForm.dart';
+import 'package:skidressourcesrel/data/viewmodels/ressourceUploadForm.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'dart:async';
 import '../data/models/category.dart';
@@ -17,8 +17,6 @@ class ressourceUpload extends StatefulWidget {
 }
 
 class _ressourceUploadState extends State<ressourceUpload> {
-
-  PlatformFile? file;
 
   @override
   Widget build(BuildContext context) {
@@ -57,22 +55,23 @@ class _ressourceUploadState extends State<ressourceUpload> {
               ))],),
               Row(children: [ Expanded(child: ressourceCategories())],),
               Row(children: [ Expanded(child: ressourcesRelationships())],),
-              Row(children: [ Text(uploadForm.getFilename! )]),
+              Row(children: [ Text(uploadForm.file != null ? uploadForm.getFile!.name : "")]),
               ElevatedButton(
                 onPressed: () async {
                   final result = await FilePicker.platform.pickFiles(
                       type: FileType.custom,
                       allowedExtensions:  ['jpg', 'pdf', 'gif', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
                   );
-                  file = result!.files.first;
-                  uploadForm.setFilename = file!.name;
-                  //print(Provider.of<ressourceForm>(context, listen: false).getFilename);
-                  //fileHelper.upload(file);
-                  //print('Name : ${file!.name}');
-                  // print(lookupMimeType(file!.path!));
+                  uploadForm.setFile = result!.files.first;
                 },
                 child: Text("Choisir un fichier"),
 
+              ),
+              ElevatedButton(
+                onPressed: (){
+                    uploadForm.submit();
+                  },
+                child: Text("Créer ma ressource"),
               ),
 
             ],
