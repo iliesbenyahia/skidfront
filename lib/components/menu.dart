@@ -36,12 +36,22 @@ class _MenuState extends State<Menu> {
             },
           ),
           ListTile(
-            title: const Text('Mes ressources'),
+            title: const Text('Ajouter un utilisateur'),
             onTap: () {
               // Update the state of the app
               // ...
               // Then close the drawer
               Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('Trouver une ressource'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/searchRessource');
             },
           ),
           ListTile(
@@ -54,6 +64,17 @@ class _MenuState extends State<Menu> {
               Navigator.pushNamed(context, '/upload');
             },
           ),
+          ListTile(
+            title: const Text('dev'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/ressource');
+            },
+          ),
+
         ],
       ),
     );

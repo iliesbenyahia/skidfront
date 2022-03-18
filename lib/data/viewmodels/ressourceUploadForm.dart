@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:skidressourcesrel/data/models/ressource.dart';
 import '../../helpers/fileHelper.dart';
 
 class ressourceForm extends ChangeNotifier{
@@ -7,9 +10,10 @@ class ressourceForm extends ChangeNotifier{
   String description = "";
   String url = "";
   String filename = "";
+  bool isCreating = false;
   PlatformFile? file;
 
-  int? categoryID;
+  String? categoryID;
   //String? categoryLabel;
   List<int> relationshipsID = [];
 
@@ -47,11 +51,11 @@ class ressourceForm extends ChangeNotifier{
     notifyListeners();
   }
 
-  int? get getCategoryID {
+  String? get getCategoryID {
     return this.categoryID;
   }
 
-  set setCategoryID(int categoryID) {
+  set setCategoryID(String categoryID) {
     this.categoryID = categoryID;
     notifyListeners();
   }
@@ -62,6 +66,15 @@ class ressourceForm extends ChangeNotifier{
 
   set setUrl(String url) {
     this.url = url;
+    notifyListeners();
+  }
+
+  bool get getIsCreating {
+    return this.isCreating;
+  }
+
+  set setIsCreating(bool isCreating) {
+    this.isCreating = isCreating;
     notifyListeners();
   }
 
@@ -85,14 +98,23 @@ class ressourceForm extends ChangeNotifier{
 
   submit() async{
     if(isSubmittable()){
-      if(this.file != null){
-        if(await fileHelper.upload(this.file)){
-
-        }
+      setIsCreating = true;
+      Ressource futureRessource = new Ressource();
+      futureRessource.file = this.file;
+      futureRessource.label = this.title;
+      futureRessource.categoryID = this.categoryID!;
+      futureRessource.relationships = json.encode(this.relationshipsID) ;
+      futureRessource.description = this.description;
+      var ressourceid = await futureRessource.create();
+      if(ressourceid){
+        setIsCreating = false;
       }
+
     }
     else{
+      //Message d'erreur ?
     }
+
   }
 
    isSubmittable(){

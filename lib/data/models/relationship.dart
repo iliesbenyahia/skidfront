@@ -44,7 +44,7 @@ class Relationship {
     if (response.statusCode == 200) {
       data = response.body;
       var jsondata = json.decode(data);
-      print(jsondata.runtimeType);
+      //print(jsondata.runtimeType);
       if (data != null) {
         for (var categ in jsondata) {
           categs.add({

@@ -51,12 +51,12 @@ class _ressourceCategoriesState extends State<ressourceCategories> {
             items: snapshot.data,
             onChanged: (val) {
                 setState(() {
-                  Provider.of<ressourceForm>(context, listen: false).setCategoryID = int.parse(val);
+                  Provider.of<ressourceForm>(context, listen: false).setCategoryID = val;
                 });
             },
             onSaved: (val) {
                 setState(() {
-                    Provider.of<ressourceForm>(context, listen: false).setCategoryID = int.parse(val!);
+                    Provider.of<ressourceForm>(context, listen: false).setCategoryID = val!;
                 });
             },
           );

@@ -20,19 +20,16 @@ class fileHelper {
     return response;
   }
 
-  static Future<bool> upload(uploadFile) async {
+  static Future<bool> upload(uploadFile,String uploadURL) async {
     bool uploaded = false;
-    final res = await getSignedURL(uploadFile);
     if (kIsWeb) {
-      var url = Uri.parse(res.data["signedRequest"]);
+      var url = Uri.parse(uploadURL);
       var response = await http.put(url, body: uploadFile.bytes);
       if(response.statusCode == 200){
         uploaded = true;
       }
     }
     else {
-      var uploadURL = res.data["signedRequest"];
-      var uploadFileURL = res.data["url"];
       var file = File(uploadFile.path);
       var dio = new Dio();
       var response = await dio.put(

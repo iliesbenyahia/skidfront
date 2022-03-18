@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:skidressourcesrel/screens/login.dart';
 import 'package:skidressourcesrel/screens/home.dart';
 import 'package:skidressourcesrel/screens/ressourceUpload.dart';
+import 'package:skidressourcesrel/screens/ressource.dart';
+import 'package:skidressourcesrel/screens/ressourcesSearch.dart';
 import 'data/viewmodels/ressourceUploadForm.dart';
 
 void main() {
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
     '/login' : (context) => const loginScreen(),
     '/home' : (context) => const homeScreen(),
     '/upload' : (context) => const ressourceUpload(),
+    '/ressource' : (context) => const ressource(),
+    '/searchRessource' : (context) => const ressourcesSearch(),
     },
     theme: ThemeData(
     primarySwatch: Colors.purple,
