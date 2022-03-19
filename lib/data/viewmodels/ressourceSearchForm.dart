@@ -18,6 +18,9 @@ class ressourceSearchForm extends ChangeNotifier{
   }
   set setSearchTerm(String searchTerm) {
     this.searchTerm = searchTerm;
+    for(Ressource ressource in ressourcesCollection){
+
+    }
     notifyListeners();
   }
 

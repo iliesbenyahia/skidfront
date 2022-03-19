@@ -43,6 +43,10 @@ class _searchBarState extends State<searchBar> {
                   border: OutlineInputBorder(),
                   hintText: 'Entrer un terme',
                 ),
+                enableSuggestions: true,
+                onChanged: (val) {
+                  searchForm.setSearchTerm = val;
+                  },
               ),
             ),
           ),
@@ -69,7 +73,6 @@ class _searchBarState extends State<searchBar> {
                         },
                         onSaved: (val) {
                             searchForm.setCategoryID = val!;
-                            print(searchForm.getCategoryID);
                         },
                       );
                     }

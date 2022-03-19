@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:skidressourcesrel/data/models/category.dart';
 import 'package:skidressourcesrel/data/models/ressource.dart';
 import 'package:skidressourcesrel/data/viewmodels/ressourceSearchForm.dart';
-
+import '../ressourcePreview.dart';
 
 class ressourcesList extends StatefulWidget {
   const ressourcesList({Key? key}) : super(key: key);
@@ -35,12 +35,17 @@ class _ressourcesListState extends State<ressourcesList> {
                             return ListView.builder(
                               itemCount: snapshot.data == null ? 0 : snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            return Card(
-                              elevation: 2,
-                                child : ListTile(
-                              title: Text(snapshot.data![index].label),
-                              subtitle: Text(snapshot.data![index].description!),
-                            ));
+                                  if(
+                                  snapshot.data![index].label.contains(new RegExp(searchForm.getSearchTerm!, caseSensitive: false))
+                                  ||
+                                      snapshot.data![index].description!.contains(new RegExp(searchForm.getSearchTerm!, caseSensitive: false))
+                                  ){
+                                    return ressourcePreview(ressource: snapshot.data![index]);
+                                  }
+                                  else{
+                                    return SizedBox.shrink();
+                                  }
+
                           },
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
@@ -49,9 +54,7 @@ class _ressourcesListState extends State<ressourcesList> {
                         },
                         future: searchForm.fetchRessourcesCollection(),
                       )
-                  ,
-
-          ));
+                  ,));
         })
     );
   }
