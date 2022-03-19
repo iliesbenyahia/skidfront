@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skidressourcesrel/data/models/ressource.dart';
 
@@ -17,12 +18,20 @@ class _ressourcePreviewState extends State<ressourcePreview> {
       return SizedBox.shrink();
     }
     else {
-      return Card(
+      return Container(
+        height: 100,
+
+        child : Card(
           elevation: 2,
           child: ListTile(
-            onTap: () {print(widget.ressource.label);},
+              onTap: () {print(widget.ressource.label);},
               title: Text(widget.ressource.label),
-              subtitle: Text((widget.ressource.description!),
+              subtitle: Text(
+                  widget.ressource.description!,
+                overflow: TextOverflow.fade,
+                maxLines: 3,
+
+              ),
               )
           )
       );
