@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skidressourcesrel/components/loginForm.dart';
 import 'package:skidressourcesrel/components/logo.dart';
-import 'package:skidressourcesrel/components/searchBar.dart';
+import 'package:skidressourcesrel/components/searchFormWidgets/searchBar.dart';
+import 'package:skidressourcesrel/components/searchFormWidgets/ressourcesList.dart';
 import '../components/menu.dart';
 
 class ressourcesSearch extends StatefulWidget {
@@ -21,6 +22,7 @@ class _ressourcesSearchState extends State<ressourcesSearch> {
          Column(
            children: [
              searchBar(),
+             ressourcesList()
            ],
         ),
 

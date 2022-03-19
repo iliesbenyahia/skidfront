@@ -6,6 +6,7 @@ import 'package:skidressourcesrel/screens/ressourceUpload.dart';
 import 'package:skidressourcesrel/screens/ressource.dart';
 import 'package:skidressourcesrel/screens/ressourcesSearch.dart';
 import 'data/viewmodels/ressourceUploadForm.dart';
+import 'data/viewmodels/ressourceSearchForm.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: ressourceForm(),
+        ),
+        ChangeNotifierProvider.value(
+          value: ressourceSearchForm(),
         ),
       ],
       child: MaterialApp(

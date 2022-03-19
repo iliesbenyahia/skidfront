@@ -60,12 +60,14 @@ class ressourceForm extends ChangeNotifier{
     notifyListeners();
   }
 
-  String? get getUrl {
+  String get getUrl {
     return this.url;
   }
 
   set setUrl(String url) {
-    this.url = url;
+    if(url != null) {
+      this.url = url;
+    }
     notifyListeners();
   }
 
@@ -98,17 +100,16 @@ class ressourceForm extends ChangeNotifier{
 
   submit() async{
     if(isSubmittable()){
-      setIsCreating = true;
+      this.setIsCreating = true;
       Ressource futureRessource = new Ressource();
       futureRessource.file = this.file;
       futureRessource.label = this.title;
       futureRessource.categoryID = this.categoryID!;
       futureRessource.relationships = json.encode(this.relationshipsID) ;
       futureRessource.description = this.description;
+      futureRessource.url = this.url;
       var ressourceid = await futureRessource.create();
-      if(ressourceid){
-        setIsCreating = false;
-      }
+      this.setIsCreating = false;
 
     }
     else{

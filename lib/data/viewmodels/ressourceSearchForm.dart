@@ -4,10 +4,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:skidressourcesrel/data/models/ressource.dart';
 import '../../helpers/fileHelper.dart';
+import '../../data/models/category.dart';
 
 class ressourceSearchForm extends ChangeNotifier{
   String searchTerm = "";
-  String? categoryID;
+  List<Map<String, dynamic>> categories = [];
+  String? categoryID = "";
+  List<Ressource> ressourcesCollection = [];
 
 
   String? get getSearchTerm {
@@ -25,8 +28,24 @@ class ressourceSearchForm extends ChangeNotifier{
 
   set setCategoryID(String categoryID) {
     this.categoryID = categoryID;
+    fetchRessourcesCollection();
+    notifyListeners();
+
+  }
+
+  set setRessourcesCollection(List<Ressource> ressourcescollec){
+    this.ressourcesCollection = ressourcescollec;
     notifyListeners();
   }
+
+  Future<List<Ressource>> fetchRessourcesCollection() async{
+    List<Ressource> ressourcesCollection = [];
+    if(categoryID != null && categoryID!.isNotEmpty) {
+      ressourcesCollection = await Ressource.fetchRessourcesOfCategory(categoryID!);
+    }
+    return ressourcesCollection;
+  }
+
 
 
   clearForm(){
