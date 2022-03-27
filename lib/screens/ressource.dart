@@ -6,6 +6,7 @@ import '../components/uploadFormWidgets/ressourceRelations.dart';
 import 'package:file_picker/file_picker.dart';
 import '../components/uploadFormWidgets/ressourceCategories.dart';
 import '../components/ressourcesActions.dart';
+import '../components/ressourcesRelationshipsBadges.dart';
 import 'package:provider/provider.dart';
 import '../data/viewmodels/ressourceUploadForm.dart';
 import '../data/viewmodels/ressourceCard.dart';
@@ -60,6 +61,7 @@ class _ressourceState extends State<ressource> {
 
                 ],
               ),
+              relationshipBadges(relationships: ressourceCard.getRessource!.relationshipsArray),
               SelectableText(ressourceCard.getRessource!.description!),
               Card(child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

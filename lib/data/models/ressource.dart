@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:skidressourcesrel/screens/ressource.dart';
 import '../../helpers/apiHelper.dart';
 import '../../helpers/fileHelper.dart';
+import '../../data/models/relationship.dart';
+import '../../data/models/category.dart';
 
 class Ressource {
 
@@ -16,6 +18,8 @@ class Ressource {
   late String relationships;
   late String? url;
   late PlatformFile? file;
+  late Category? category;
+  List<Relationship> relationshipsArray = [];
 
   create() async{
     if(this.file != null){
@@ -68,11 +72,24 @@ class Ressource {
     if (data != null) {
       for (var data in jsondata) {
           Ressource ressource = new Ressource();
+
           ressource.id = data["id"];
           ressource.label = data["label"];
           ressource.description = data["description"];
           ressource.url = data["url"];
+          print("************************");
+          for(var relationship in data["Relationships"]){
+            //print(relationship);
+            Relationship rel = Relationship();
+            rel.id = relationship["id"];
+            rel.label = relationship["label"];
+            ressource.relationshipsArray.add(rel);
+
+          }
           resourcesCollection.add(ressource);
+
+
+          //print(data["RessourceCategory"]);
 
         //
       }
@@ -91,7 +108,7 @@ class Ressource {
     var jsondata = json.decode(data);
 
     //this.id = int.parse(jsondata["id"]);
-    this.label = "mdr";
+    //this.label = "mdr";
    /* this.description = jsondata["description"];
     this.url = jsondata["url"];
     this.categoryID = jsondata["RessourceCategoryId"];
