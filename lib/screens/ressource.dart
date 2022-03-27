@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skidressourcesrel/data/models/ressource.dart';
 import '../components/menu.dart';
 import '../components/uploadFormWidgets/ressourceRelations.dart';
 import 'package:file_picker/file_picker.dart';
@@ -20,59 +21,31 @@ class _ressourceState extends State<ressource> {
 
   @override
   Widget build(BuildContext context) {
+    final ressource = ModalRoute.of(context)!.settings.arguments as Ressource;
+    print(ressource.description);
     return  Scaffold(
-      appBar: AppBar(title: Text("Partage de ressources"),),
+      appBar: AppBar(title: Text(ressource.label),),
       drawer: Menu(),
       body:
         Consumer<ressourceForm>(builder: (context, uploadForm, child) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Row(children: [ Expanded(child:
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Intitulé de la ressource',
-                ),
-                onChanged: (text){
-                  uploadForm.setTitle = text;
-                },
-              ),
-              )]
-              ),
-              Row(children: [ Expanded(child: Card(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextField(
-                      onChanged: (text) {
-                        uploadForm.description = text;
-                      },
-                      maxLines: 8,
-                      decoration: InputDecoration.collapsed(hintText: "Description de la ressource (facultative)"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                  child: SelectableText(
+                    ressource.label,
+                    style: TextStyle(
+                      fontSize: 34,
                     ),
-                  )
-              ))],),
-              Row(children: [ Expanded(child: ressourceCategories())],),
-              Row(children: [ Expanded(child: ressourcesRelationships())],),
-              Row(children: [ Text(uploadForm.file != null ? uploadForm.getFile!.name : "")]),
-              ElevatedButton(
-                onPressed: () async {
-                  final result = await FilePicker.platform.pickFiles(
-                      type: FileType.custom,
-                      allowedExtensions:  ['jpg', 'pdf', 'gif', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
-                  );
-                  uploadForm.setFile = result!.files.first;
-                },
-                child: Text("Choisir un fichier"),
+                  ),),
 
+                ],
               ),
-              ElevatedButton(
-                onPressed: (){
-                    uploadForm.submit();
-                  },
-                child: Text("Créer ma ressource"),
-              ),
+              SelectableText(ressource.description!),
 
             ],
           );

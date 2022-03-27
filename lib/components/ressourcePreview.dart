@@ -24,7 +24,10 @@ class _ressourcePreviewState extends State<ressourcePreview> {
         child : Card(
           elevation: 2,
           child: ListTile(
-              onTap: () {print(widget.ressource.label);},
+              onTap: () {
+                print(widget.ressource.label);
+                Navigator.pushNamed(context, '/ressource', arguments : widget.ressource );
+              },
               title: Text(widget.ressource.label),
               subtitle: Text(
                   widget.ressource.description!,
