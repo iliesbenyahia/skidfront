@@ -93,8 +93,13 @@ class _ressourcesRelationshipsState extends State<ressourcesRelationships> {
                 fontSize: 16,
               ),
             ),
+            onSelectionChanged:  (results) {
+              Provider.of<ressourceForm>(context, listen: false).setRelationshipsID = results.cast<int>();
+              //print(Provider.of<ressourceForm>(context, listen: false).getRelationshipsID);
+              //_selectedAnimals = results;
+            },
             onConfirm: (results) {
-              Provider.of<ressourceForm>(context, listen: false).relationshipsID = results.cast<int>();
+              Provider.of<ressourceForm>(context, listen: false).setRelationshipsID = results.cast<int>();
               //print(Provider.of<ressourceForm>(context, listen: false).getRelationshipsID);
               //_selectedAnimals = results;
             },); //todo loading

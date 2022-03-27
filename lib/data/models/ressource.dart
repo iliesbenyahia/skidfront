@@ -51,6 +51,8 @@ class Ressource {
     return response.body;
   }
 
+
+
   static Future<List<Ressource>> fetchRessourcesOfCategory(String categoryID) async{
     print("la categ");
     print(categoryID);
@@ -78,6 +80,24 @@ class Ressource {
     return resourcesCollection;
   }
 
+
+  fetch(String id) async{
+    final response = await http.get(Uri.parse(API.getUrlWithRoute("ressources/"+id)),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    );
+    var data = response.body;
+    var jsondata = json.decode(data);
+
+    //this.id = int.parse(jsondata["id"]);
+    this.label = "mdr";
+   /* this.description = jsondata["description"];
+    this.url = jsondata["url"];
+    this.categoryID = jsondata["RessourceCategoryId"];
+    */
+
+  }
 
 
 }

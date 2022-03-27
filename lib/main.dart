@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:skidressourcesrel/data/viewmodels/ressourceCard.dart';
 import 'package:skidressourcesrel/screens/login.dart';
 import 'package:skidressourcesrel/screens/home.dart';
 import 'package:skidressourcesrel/screens/ressourceUpload.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: ressourceSearchForm(),
+        ),
+        ChangeNotifierProvider.value(
+          value: ressourceCard(),
         ),
       ],
       child: MaterialApp(

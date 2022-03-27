@@ -32,6 +32,7 @@ class ressourceForm extends ChangeNotifier{
   set setFile(PlatformFile file){
       this.file = file;
       this.filename = file.name;
+      print(file.extension);
       notifyListeners();
   }
 
