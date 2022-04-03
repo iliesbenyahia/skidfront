@@ -51,7 +51,7 @@ class _searchBarState extends State<searchBar> {
             ),
           ),
           Expanded(
-              flex: 1,
+              flex: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 18, vertical: 16),
                 child: FutureBuilder<List<Map<String, dynamic>>>(

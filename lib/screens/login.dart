@@ -18,12 +18,7 @@ class _loginScreenState extends State<loginScreen> {
         children: <Widget>[
           primaryLogo(),
           loginForm(),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/home');
-            }, //Todo login with API
-            child: Text("Se connecter"),
-          )
+
         ],
       ),
     );

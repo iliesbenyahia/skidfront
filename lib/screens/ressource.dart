@@ -10,6 +10,7 @@ import '../components/ressourcesRelationshipsBadges.dart';
 import 'package:provider/provider.dart';
 import '../data/viewmodels/ressourceUploadForm.dart';
 import '../data/viewmodels/ressourceCard.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:select_form_field/select_form_field.dart';
 import 'dart:async';
 import '../data/models/category.dart';
@@ -90,7 +91,15 @@ class _ressourceState extends State<ressource> {
                       Icons.download_outlined,
                       color: Colors.purple,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if(await canLaunch(ressource.url!)){
+                        await launch((ressource.url!));
+                      }
+                      else{
+                            // can't launch url, there is some error
+                            throw "Could not launch $ressource.url!";
+                            }
+                    },
                     iconSize: 50,
                     padding: EdgeInsets.all(10),
                   ),
