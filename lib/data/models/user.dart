@@ -10,8 +10,11 @@ class User {
   String? lastname;
 
 
-
-  //Return string of relationships from API Call, needs to be converted
+   /**
+   * static login function, takes user's mail and password and returns and id >0 if Ok, < 0 if Nok
+   *
+   * @param label text for label of form
+   */
   static Future<User> login(String mail, String password) async {
     User futureUser = new User();
     final response = await http.post(Uri.parse(API.getUrlWithRoute("user/login/")),
@@ -28,11 +31,10 @@ class User {
 
       futureUser.id = jsonData["id"];
       futureUser.mail = jsonData["mail"];
-      return futureUser;
     } else {
       futureUser.id = -1;
-      return futureUser;
     }
+    return futureUser;
   }
 
 

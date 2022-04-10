@@ -9,6 +9,7 @@ import '../../helpers/apiHelper.dart';
 import '../../helpers/fileHelper.dart';
 import '../../data/models/relationship.dart';
 import '../../data/models/category.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class Ressource {
 
@@ -23,7 +24,7 @@ class Ressource {
   late Category? category;
   List<Relationship> relationshipsArray = [];
 
-  create({required BuildContext context}) async{
+  create(ProgressDialog? progressDialog) async{
     if(this.file != null){
       //Récup du lien signé pour l'upload sur AWS S3
       var firstUploadStep = await fileHelper.getSignedURL(this.file);
@@ -33,7 +34,7 @@ class Ressource {
         print("Upload ERROR");
         return -1;
       }
-      var secondUploadStep = await fileHelper.upload(this.file, uploadURL, context);
+      var secondUploadStep = await fileHelper.upload(uploadFile : this.file, uploadURL : uploadURL, progressDialog: progressDialog);
       if(!secondUploadStep){
         print("Upload ERROR");
         return -2;

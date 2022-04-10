@@ -5,12 +5,14 @@ import 'package:skidressourcesrel/data/models/ressource.dart';
 import 'package:skidressourcesrel/data/viewmodels/ressourceCard.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sn_progress_dialog/completed.dart';
 import '../components/menu.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import '../components/ressourcesRelationshipsBadges.dart';
 import 'package:provider/provider.dart';
 import '../data/viewmodels/ressourceCard.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class ressource extends StatefulWidget {
   const ressource({Key? key}) : super(key: key);
@@ -130,24 +132,33 @@ class _ressourceState extends State<ressource> {
                         }
                       }
                       else{
-                        print("issou deska");
-                        print(ressourceCard.getRessource!.filename!);
+                        ProgressDialog pd = ProgressDialog(context: context);
+                        pd.show(
+                            max: 100, msg: "Téléchargement de la ressource",
+                            msgMaxLines: 2,
+                            progressType: ProgressType.valuable,
+                            completed: Completed(completedMsg: "Ressource téléchargée !"),
+                            progressValueColor: Colors.purple,
+                            progressBgColor: Colors.white70,
+
+                        );
                         options = DownloaderUtils(
                           progressCallback: (current, total) {
                             final progress = (current / total) * 100;
                             print('Downloading: $progress');
-
+                            pd.update(value: progress.round());
 
                           },
                           file: File('$path/${ressource.filename}'),
                           progress: ProgressImplementation(),
-                          onDone: () {
-                            OpenFile.open('$path/${ressource.filename}')
-                                .then((value) {
-                              // delete the file.
-                              //File f = File('$path/${ressource.filename}');
-                              //f.delete();
-                            });
+                          onDone: () async {
+                            pd.close();
+                            await OpenFile.open('$path/${ressource.filename}');
+                            //     .then((value) {
+                            //   // delete the file.
+                            //   //File f = File('$path/${ressource.filename}');
+                            //   //f.delete();
+                            // });
                           },
                           deleteOnCancel: true,
                         );

@@ -21,15 +21,11 @@ class _ressourceUploadState extends State<ressourceUpload> {
 
   _normalProgress({required context}) async {
     /// Create progress dialog
-    ProgressDialog pd = ProgressDialog(context: context);
+
 
     /// Set options
     /// Max and msg required
-    pd.show(
-      max: 100,
-      msg: 'Partage en cours',
-      progressBgColor: Colors.transparent,
-    );
+
     // print("hihi : ");
     // print(Provider.of<ressourceForm>(context, listen: false).getProgressPercent.toInt());
     // print(Provider.of<ressourceForm>(context, listen: false).getProgressPercent.toInt().runtimeType);
@@ -38,9 +34,9 @@ class _ressourceUploadState extends State<ressourceUpload> {
     while (i < 100) {
       /// You don't need to update state, just pass the value.
       /// Only value required
-      pd.update(value: i);
+
       i = Provider.of<ressourceForm>(context, listen: false).getProgressPercent.toInt();
-      await Future.delayed(Duration(milliseconds: 100));
+       Future.delayed(Duration(milliseconds: 100));
     }
     print(Provider.of<ressourceForm>(context, listen: false).getProgressPercent);
   }
@@ -98,8 +94,8 @@ class _ressourceUploadState extends State<ressourceUpload> {
                 ),
                 ElevatedButton(
                   onPressed: (){
-                    uploadForm.submit(context);
-                    _normalProgress(context: context);
+                    ProgressDialog pd = ProgressDialog(context: context);
+                    uploadForm.submit(context: context, processDialog: pd);
                   },
                   child: Text("Créer ma ressource"),
                 ),

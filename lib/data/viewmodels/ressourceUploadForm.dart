@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:skidressourcesrel/data/models/ressource.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import '../../helpers/fileHelper.dart';
 
 class ressourceForm extends ChangeNotifier{
@@ -32,11 +33,18 @@ class ressourceForm extends ChangeNotifier{
 
   set setProgessPercent(double progressPercent){
     this.progressPercent = progressPercent;
+    print("setProgress");
+    print(this.progressPercent);
     notifyListeners();
+
   }
 
-  double get getProgressPercent{
-    return this.progressPercent;
+  int get getProgressPercent{
+
+
+    print("getProgress");
+    print(this.progressPercent);
+    return progressPercent.toInt();
   }
 
   set setFile(PlatformFile file){
@@ -109,7 +117,7 @@ class ressourceForm extends ChangeNotifier{
     this.relationshipsID = [];
   }
 
-  submit(BuildContext context) async{
+  submit({required BuildContext context, ProgressDialog? processDialog}) async{
     if(isSubmittable()){
       this.setIsCreating = true;
       Ressource futureRessource = new Ressource();
@@ -122,7 +130,7 @@ class ressourceForm extends ChangeNotifier{
       futureRessource.relationships = json.encode(this.relationshipsID) ;
       futureRessource.description = this.description;
       futureRessource.url = this.url;
-      var ressourceid = await futureRessource.create(context: context);
+      var ressourceid = await futureRessource.create(processDialog);
       this.setIsCreating = false;
 
     }
