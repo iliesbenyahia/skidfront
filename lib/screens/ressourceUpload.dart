@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import '../components/menu.dart';
 import '../components/uploadFormWidgets/ressourceRelations.dart';
 import 'package:file_picker/file_picker.dart';
@@ -18,6 +19,32 @@ class ressourceUpload extends StatefulWidget {
 
 class _ressourceUploadState extends State<ressourceUpload> {
 
+  _normalProgress({required context}) async {
+    /// Create progress dialog
+    ProgressDialog pd = ProgressDialog(context: context);
+
+    /// Set options
+    /// Max and msg required
+    pd.show(
+      max: 100,
+      msg: 'Partage en cours',
+      progressBgColor: Colors.transparent,
+    );
+    // print("hihi : ");
+    // print(Provider.of<ressourceForm>(context, listen: false).getProgressPercent.toInt());
+    // print(Provider.of<ressourceForm>(context, listen: false).getProgressPercent.toInt().runtimeType);
+    // pd.update(value: Provider.of<ressourceForm>(context, listen: false).getProgressPercent.toInt());
+    int i = 0;
+    while (i < 100) {
+      /// You don't need to update state, just pass the value.
+      /// Only value required
+      pd.update(value: i);
+      i = Provider.of<ressourceForm>(context, listen: false).getProgressPercent.toInt();
+      await Future.delayed(Duration(milliseconds: 100));
+    }
+    print(Provider.of<ressourceForm>(context, listen: false).getProgressPercent);
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -25,57 +52,62 @@ class _ressourceUploadState extends State<ressourceUpload> {
       drawer: Menu(),
       body:
         Consumer<ressourceForm>(builder: (context, uploadForm, child) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(children: [ Expanded(child:
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Intitulé de la ressource',
-                ),
-                onChanged: (text){
-                  uploadForm.setTitle = text;
-                },
-              ),
-              )]
-              ),
-              Row(children: [ Expanded(child: Card(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: TextField(
-                      onChanged: (text) {
-                        uploadForm.description = text;
-                      },
-                      maxLines: 8,
-                      decoration: InputDecoration.collapsed(hintText: "Description de la ressource (facultative)"),
-                    ),
-                  )
-              ))],),
-              Row(children: [ Expanded(child: ressourceCategories())],),
-              Row(children: [ Expanded(child: ressourcesRelationships())],),
-              Row(children: [ Text(uploadForm.file != null ? uploadForm.getFile!.name : "")]),
-              ElevatedButton(
-                onPressed: () async {
-                  final result = await FilePicker.platform.pickFiles(
-                      type: FileType.custom,
-                      allowedExtensions:  ['jpg', 'pdf', 'gif', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
-                  );
-                  uploadForm.setFile = result!.files.first;
-                },
-                child: Text("Choisir un fichier"),
-
-              ),
-              ElevatedButton(
-                onPressed: (){
-                    uploadForm.submit();
+          return SingleChildScrollView(
+            child:
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(children: [ Expanded(child:
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Intitulé de la ressource',
+                  ),
+                  onChanged: (text){
+                    uploadForm.setTitle = text;
                   },
-                child: Text("Créer ma ressource"),
-              ),
+                ),
+                )]
+                ),
+                Row(children: [ Expanded(child: Card(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextField(
+                        onChanged: (text) {
+                          uploadForm.description = text;
+                        },
+                        maxLines: 8,
+                        decoration: InputDecoration.collapsed(hintText: "Description de la ressource (facultative)"),
+                      ),
+                    )
+                ))],),
+                Row(children: [ Expanded(child: ressourceCategories())],),
+                Row(children: [ Expanded(child: ressourcesRelationships())],),
+                Row(children: [ Text(uploadForm.file != null ? uploadForm.getFile!.name : "")]),
+                ElevatedButton(
+                  onPressed: () async {
+                    final result = await FilePicker.platform.pickFiles(
+                        type: FileType.custom,
+                        allowedExtensions:  ['jpg', 'pdf', 'gif', 'doc', 'avi', 'mp4', 'wmv', 'mkv','png']
+                    );
+                    uploadForm.setFile = result!.files.first;
+                  },
+                  child: Text("Choisir un fichier"),
 
-            ],
-          );
+                ),
+                ElevatedButton(
+                  onPressed: (){
+                    uploadForm.submit(context);
+                    _normalProgress(context: context);
+                  },
+                  child: Text("Créer ma ressource"),
+                ),
+
+              ],
+            )
+            ,
+          );;
         },
         ),
 

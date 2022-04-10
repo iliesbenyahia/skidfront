@@ -10,6 +10,7 @@ class ressourceForm extends ChangeNotifier{
   String description = "";
   String url = "";
   String filename = "";
+  double progressPercent = 0;
   bool isCreating = false;
   PlatformFile? file;
 
@@ -27,6 +28,15 @@ class ressourceForm extends ChangeNotifier{
 
   PlatformFile? get getFile{
     return this.file;
+  }
+
+  set setProgessPercent(double progressPercent){
+    this.progressPercent = progressPercent;
+    notifyListeners();
+  }
+
+  double get getProgressPercent{
+    return this.progressPercent;
   }
 
   set setFile(PlatformFile file){
@@ -99,17 +109,20 @@ class ressourceForm extends ChangeNotifier{
     this.relationshipsID = [];
   }
 
-  submit() async{
+  submit(BuildContext context) async{
     if(isSubmittable()){
       this.setIsCreating = true;
       Ressource futureRessource = new Ressource();
       futureRessource.file = this.file;
+      if(file != null) {
+        futureRessource.filename = this.file!.name;
+      }
       futureRessource.label = this.title;
       futureRessource.categoryID = this.categoryID!;
       futureRessource.relationships = json.encode(this.relationshipsID) ;
       futureRessource.description = this.description;
       futureRessource.url = this.url;
-      var ressourceid = await futureRessource.create();
+      var ressourceid = await futureRessource.create(context: context);
       this.setIsCreating = false;
 
     }

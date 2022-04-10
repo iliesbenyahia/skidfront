@@ -45,6 +45,10 @@ dependencies:
   dropdown_button2: ^1.2.2
   provider: ^6.0.2
   url_launcher: ^6.0.20
+  flowder: ^0.2.0
+  path_provider: ^2.0.9
+  open_file: ^3.2.1
+  sn_progress_dialog: ^1.0.6
 
 dev_dependencies:
   flutter_test:

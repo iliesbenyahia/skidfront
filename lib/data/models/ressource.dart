@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:skidressourcesrel/screens/ressource.dart';
 import '../../helpers/apiHelper.dart';
@@ -18,10 +19,11 @@ class Ressource {
   late String relationships;
   late String? url;
   late PlatformFile? file;
+  late String? filename;
   late Category? category;
   List<Relationship> relationshipsArray = [];
 
-  create() async{
+  create({required BuildContext context}) async{
     if(this.file != null){
       //Récup du lien signé pour l'upload sur AWS S3
       var firstUploadStep = await fileHelper.getSignedURL(this.file);
@@ -31,7 +33,7 @@ class Ressource {
         print("Upload ERROR");
         return -1;
       }
-      var secondUploadStep = await fileHelper.upload(this.file, uploadURL);
+      var secondUploadStep = await fileHelper.upload(this.file, uploadURL, context);
       if(!secondUploadStep){
         print("Upload ERROR");
         return -2;
@@ -47,6 +49,7 @@ class Ressource {
           "label": label,
           "categoryID" : categoryID,
           "relationships" : relationships,
+          "filename" : filename,
           "url" : url,
           "description" : description,
         },
@@ -77,6 +80,7 @@ class Ressource {
           ressource.label = data["label"];
           ressource.description = data["description"];
           ressource.url = data["url"];
+          ressource.filename = data["filename"];
           print("************************");
           for(var relationship in data["Relationships"]){
             //print(relationship);

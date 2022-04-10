@@ -3,15 +3,19 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
 import 'dart:io' as io;
+import 'package:provider/provider.dart';
+import 'package:skidressourcesrel/data/viewmodels/ressourceUploadForm.dart';
+import 'package:skidressourcesrel/screens/ressource.dart';
 import 'dart:async' as io;
 import 'apiHelper.dart';
 import 'package:http_parser/http_parser.dart';
 
-class fileHelper {
+class fileHelper{
 
   static Future<Response> getSignedURL(file) async {
     var dio = Dio();
@@ -20,7 +24,7 @@ class fileHelper {
     return response;
   }
 
-  static Future<bool> upload(uploadFile,String uploadURL) async {
+  static Future<bool> upload(uploadFile,String uploadURL, BuildContext context) async {
     bool uploaded = false;
     if (kIsWeb) {
       var url = Uri.parse(uploadURL);
@@ -43,10 +47,11 @@ class fileHelper {
         ),
         onSendProgress: (int sentBytes, int totalBytes) {
           double progressPercent = sentBytes / totalBytes * 100;
+          Provider.of<ressourceForm>(context, listen: false).setProgessPercent = progressPercent;
           if (progressPercent == 100) {
-            print("ISSOUUPLOADED");
+            uploaded = true;
           }
-          print("$progressPercent %");
+          //print("$progressPercent %");
         },
       );
 

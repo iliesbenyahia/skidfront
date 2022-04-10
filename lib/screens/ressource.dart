@@ -1,19 +1,16 @@
+import 'dart:io';
+import 'package:flowder/flowder.dart';
 import 'package:flutter/material.dart';
 import 'package:skidressourcesrel/data/models/ressource.dart';
 import 'package:skidressourcesrel/data/viewmodels/ressourceCard.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 import '../components/menu.dart';
-import '../components/uploadFormWidgets/ressourceRelations.dart';
-import 'package:file_picker/file_picker.dart';
-import '../components/uploadFormWidgets/ressourceCategories.dart';
-import '../components/ressourcesActions.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import '../components/ressourcesRelationshipsBadges.dart';
 import 'package:provider/provider.dart';
-import '../data/viewmodels/ressourceUploadForm.dart';
 import '../data/viewmodels/ressourceCard.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:select_form_field/select_form_field.dart';
-import 'dart:async';
-import '../data/models/category.dart';
 
 class ressource extends StatefulWidget {
   const ressource({Key? key}) : super(key: key);
@@ -23,6 +20,36 @@ class ressource extends StatefulWidget {
 }
 
 class _ressourceState extends State<ressource> {
+
+  late DownloaderUtils options;
+  late DownloaderCore core;
+  late final String path;
+
+  @override
+  void initState() {
+    super.initState();
+
+    initPlatformState();
+  }
+
+  Future<void> initPlatformState() async {
+    _setPath();
+    if (!mounted) return;
+  }
+
+  void _setPath() async {
+    Directory _path = await getApplicationDocumentsDirectory();
+
+    String _localPath = _path.path + Platform.pathSeparator + 'Download';
+
+    final savedDir = Directory(_localPath);
+    bool hasExisted = await savedDir.exists();
+    if (!hasExisted) {
+      savedDir.create();
+    }
+
+    path = _localPath;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +119,45 @@ class _ressourceState extends State<ressource> {
                       color: Colors.purple,
                     ),
                     onPressed: () async {
-                      if(await canLaunch(ressource.url!)){
-                        await launch((ressource.url!));
+
+                      if(kIsWeb) {
+                        if (await canLaunch(ressource.url!)) {
+                          await launch((ressource.url!));
+                        }
+                        else {
+                          // can't launch url, there is some error
+                          throw "Could not launch $ressource.url!";
+                        }
                       }
                       else{
-                            // can't launch url, there is some error
-                            throw "Could not launch $ressource.url!";
-                            }
+                        print("issou deska");
+                        print(ressourceCard.getRessource!.filename!);
+                        options = DownloaderUtils(
+                          progressCallback: (current, total) {
+                            final progress = (current / total) * 100;
+                            print('Downloading: $progress');
+
+
+                          },
+                          file: File('$path/${ressource.filename}'),
+                          progress: ProgressImplementation(),
+                          onDone: () {
+                            OpenFile.open('$path/${ressource.filename}')
+                                .then((value) {
+                              // delete the file.
+                              //File f = File('$path/${ressource.filename}');
+                              //f.delete();
+                            });
+                          },
+                          deleteOnCancel: true,
+                        );
+                        core = await Flowder.download(
+                          ressource.url!,
+                          options,
+                        );
+
+                      }
+
                     },
                     iconSize: 50,
                     padding: EdgeInsets.all(10),
