@@ -131,6 +131,7 @@ class ressourceForm extends ChangeNotifier{
       futureRessource.description = this.description;
       futureRessource.url = this.url;
       var ressourceid = await futureRessource.create(processDialog);
+      Navigator.pushNamed(context, '/ressource', arguments : futureRessource);
       this.setIsCreating = false;
 
     }

@@ -45,6 +45,7 @@ class ressourceSearchForm extends ChangeNotifier{
     List<Ressource> ressourcesCollection = [];
     if(categoryID != null && categoryID!.isNotEmpty) {
       ressourcesCollection = await Ressource.fetchRessourcesOfCategory(categoryID!);
+      print(ressourcesCollection);
     }
     return ressourcesCollection;
   }

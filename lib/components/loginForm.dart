@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../data/models/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class loginForm extends StatefulWidget {
   const loginForm({Key? key}) : super(key: key);
@@ -62,7 +63,20 @@ class _loginFormState extends State<loginForm> {
                       if (mail != null && password != null) {
                         User user = await User.login(mail!, password!);
                         if (user.id! > 0) {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setInt('uid', user.id!);
+                          if(user.firstname != null){
+                            await prefs.setString('ufirstname', user.firstname!);
+                          }
+                          if(user.lastname != null){
+                            await prefs.setString('ulastname', user.lastname!);
+                          }
+                          if(user.mail != null){
+                            await prefs.setString('umail', user.mail!);
+                          }
+                          Navigator.pop(context);
                           Navigator.pushNamed(context, '/home');
+
                         } else {
                           final snackBar = SnackBar(
                             content: const Text(
@@ -112,6 +126,7 @@ class _loginFormState extends State<loginForm> {
                             color: Colors.purple,
                           ),),
                           onTap: () {
+                              Navigator.pop(context);
                               Navigator.pushNamed(context, '/signup');
                           },
                         )

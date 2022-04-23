@@ -26,6 +26,7 @@ class _ressourcePreviewState extends State<ressourcePreview> {
           child: ListTile(
               onTap: () {
                 print(widget.ressource.label);
+                Navigator.pop(context);
                 Navigator.pushNamed(context, '/ressource', arguments : widget.ressource );
               },
               title: Text(widget.ressource.label),

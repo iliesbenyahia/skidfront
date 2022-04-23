@@ -6,7 +6,7 @@ class primaryLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-      text: const TextSpan(
+      text: TextSpan(
         text: 'Ressources ',
         style: TextStyle(fontSize: 40, color: Colors.purple),
         children: <TextSpan>[

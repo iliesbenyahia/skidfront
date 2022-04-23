@@ -41,5 +41,14 @@ class ressourceCard extends ChangeNotifier{
     return sendable;
   }
 
+  addToFav() async{
+    await this.ressource!.addToFavourite();
+    notifyListeners();
+  }
+
+  removeFromFav() async{
+    await this.ressource!.removeFromFavourite();
+    notifyListeners();
+  }
 
 }

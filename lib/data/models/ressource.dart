@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skidressourcesrel/screens/ressource.dart';
 import '../../helpers/apiHelper.dart';
 import '../../helpers/fileHelper.dart';
@@ -22,6 +21,7 @@ class Ressource {
   late PlatformFile? file;
   late String? filename;
   late Category? category;
+  late int? isFav = 0;
   List<Relationship> relationshipsArray = [];
 
   create(ProgressDialog? progressDialog) async{
@@ -41,6 +41,7 @@ class Ressource {
       }
 
     }
+    final pref = await SharedPreferences.getInstance();
 
     final response = await http.post(Uri.parse(API.getUrlWithRoute("ressources")),
         headers: {
@@ -53,6 +54,7 @@ class Ressource {
           "filename" : filename,
           "url" : url,
           "description" : description,
+          "userid" : pref.getInt("uid").toString()
         },
     );
 
@@ -65,7 +67,14 @@ class Ressource {
     print("la categ");
     print(categoryID);
     List<Ressource> resourcesCollection = [];
-    final response = await http.get(Uri.parse(API.getUrlWithRoute("ressources/category/"+categoryID)),
+    final prefs = await SharedPreferences.getInstance();
+    var url = "ressources/category/"+categoryID;
+
+    if(prefs.get("uid") != null){
+      url += "/" + prefs.get("uid").toString();
+    }
+
+    final response = await http.get(Uri.parse(API.getUrlWithRoute(url)),
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -82,7 +91,7 @@ class Ressource {
           ressource.description = data["description"];
           ressource.url = data["url"];
           ressource.filename = data["filename"];
-          print("************************");
+          ressource.isFav = data["isFav"];
           for(var relationship in data["Relationships"]){
             //print(relationship);
             Relationship rel = Relationship();
@@ -94,7 +103,7 @@ class Ressource {
           resourcesCollection.add(ressource);
 
 
-          //print(data["RessourceCategory"]);
+          print(data);
 
         //
       }
@@ -119,6 +128,39 @@ class Ressource {
     this.categoryID = jsondata["RessourceCategoryId"];
     */
 
+  }
+
+  addToFavourite() async {
+    final prefs = await SharedPreferences.getInstance();
+    var url = "ressources/fav";
+
+    final response = await http.post(Uri.parse(API.getUrlWithRoute(url)),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: {
+        "ressourceid": this.id.toString(),
+        "userid" : prefs.getInt("uid").toString()
+      }
+    );
+    this.isFav = 1;
+  }
+
+  removeFromFavourite() async {
+    final prefs = await SharedPreferences.getInstance();
+    var url = "ressources/fav";
+
+
+    final response = await http.delete(Uri.parse(API.getUrlWithRoute(url)),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: {
+          "ressourceid": this.id.toString(),
+          "userid" : prefs.getInt("uid").toString()
+        }
+    );
+    this.isFav = 0;
   }
 
 

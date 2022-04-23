@@ -31,27 +31,11 @@ class _ressourceState extends State<ressource> {
   void initState() {
     super.initState();
 
-    initPlatformState();
   }
 
-  Future<void> initPlatformState() async {
-    _setPath();
-    if (!mounted) return;
-  }
 
-  void _setPath() async {
-    Directory _path = await getApplicationDocumentsDirectory();
 
-    String _localPath = _path.path + Platform.pathSeparator + 'Download';
 
-    final savedDir = Directory(_localPath);
-    bool hasExisted = await savedDir.exists();
-    if (!hasExisted) {
-      savedDir.create();
-    }
-
-    path = _localPath;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +91,43 @@ class _ressourceState extends State<ressource> {
                   ),
                   IconButton(
                     icon : Icon(
-                      Icons.star_border,
-                      color: Colors.purple,
+                      ressourceCard.getRessource!.isFav == 1 ? Icons.star_outlined : Icons.star_border,
+                      color: ressourceCard.getRessource!.isFav == 1 ? Colors.yellow : Colors.purple,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if(ressourceCard.getRessource!.isFav == 1){
+
+                        final snackBar = SnackBar(
+                          content: const Text(
+                              'Retiré des favoris !'),
+                          action: SnackBarAction(
+                            label: 'Confirmer',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        await ressourceCard.removeFromFav();
+                      }
+                      else{
+
+                        final snackBar = SnackBar(
+                          content: const Text(
+                              'Ajouté aux favoris !'),
+                          action: SnackBarAction(
+                            label: 'Confirmer',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        await ressourceCard.addToFav();
+                      }
+                    },
                     iconSize: 50,
                     padding: EdgeInsets.all(10),
                   ),
