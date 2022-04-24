@@ -18,7 +18,6 @@ import 'package:sn_progress_dialog/completed.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'dart:async' as io;
 import 'apiHelper.dart';
-import 'package:universal_io/io.dart';
 import 'package:http_parser/http_parser.dart';
 
 class fileHelper{

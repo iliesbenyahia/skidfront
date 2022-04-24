@@ -30,9 +30,27 @@ class _ressourceState extends State<ressource> {
   @override
   void initState() {
     super.initState();
-
+    initPlatformState();
   }
 
+  Future<void> initPlatformState() async {
+    _setPath();
+    if (!mounted) return;
+  }
+
+  void _setPath() async {
+    Directory _path = await getApplicationDocumentsDirectory();
+
+    String _localPath = _path.path + Platform.pathSeparator + 'Download';
+
+    final savedDir = Directory(_localPath);
+    bool hasExisted = await savedDir.exists();
+    if (!hasExisted) {
+      savedDir.create();
+    }
+
+    path = _localPath;
+  }
 
 
 
@@ -153,12 +171,13 @@ class _ressourceState extends State<ressource> {
                         pd.show(
                             max: 100, msg: "Téléchargement de la ressource",
                             msgMaxLines: 2,
-                            progressType: ProgressType.valuable,
+                            progressType: ProgressType.normal,
                             completed: Completed(completedMsg: "Ressource téléchargée !"),
                             progressValueColor: Colors.purple,
                             progressBgColor: Colors.white70,
 
                         );
+                        print("toto");
                         options = DownloaderUtils(
                           progressCallback: (current, total) {
                             final progress = (current / total) * 100;
