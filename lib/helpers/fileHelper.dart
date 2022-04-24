@@ -36,7 +36,7 @@ class fileHelper{
       progressDialog.show(
         max: 100,
         progressType: ProgressType.normal,
-        progressValueColor: Colors.purple,
+        progressValueColor: Color(0xff544cb4),
         progressBgColor: Colors.white70,
         msg: 'Création de la ressource en cours',
         msgMaxLines: 2,

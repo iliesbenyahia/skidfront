@@ -16,6 +16,7 @@ class _loginScreenState extends State<loginScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          Image.asset("assets/skid.png", height: 150, width: 150,),
           primaryLogo(),
           loginForm(),
 

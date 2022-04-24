@@ -8,11 +8,12 @@ class primaryLogo extends StatelessWidget {
     return RichText(
       text: TextSpan(
         text: 'Ressources ',
-        style: TextStyle(fontSize: 40, color: Colors.purple),
+        style: TextStyle(fontSize: 40, color: Color(0xff544cb4)),
         children: <TextSpan>[
           TextSpan(text: 'Relationnelles', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40)),
         ],
       ),
+      textAlign: TextAlign.center,
     );
   }
 }

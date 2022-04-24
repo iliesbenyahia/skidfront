@@ -45,8 +45,8 @@ class MyApp extends StatelessWidget {
     '/signup' : (context) => const signUp(),
     },
     theme: ThemeData(
-    primarySwatch: Colors.purple,
-    primaryColor: Colors.purple
+    primarySwatch: Colors.deepPurple,
+    primaryColor: Color(0xff544cb4)
     ),
     ));
   }

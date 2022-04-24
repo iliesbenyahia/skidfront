@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/models/ressource.dart';
+
 import '../data/models/relationship.dart';
 
 class relationshipBadges extends StatefulWidget {
@@ -18,7 +19,7 @@ class _relationshipBadgesState extends State<relationshipBadges> {
         badges.add(
             Chip(
               padding: EdgeInsets.all(0),
-              backgroundColor: Colors.purple,
+              backgroundColor: Color(0xff544cb4),
               label: Text(rel.label, style: TextStyle(color: Colors.white)),
           ));
     }

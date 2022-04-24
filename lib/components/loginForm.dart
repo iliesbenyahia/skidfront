@@ -123,7 +123,7 @@ class _loginFormState extends State<loginForm> {
                           child: Text("Je m'inscris !",
                           style: TextStyle(
                             decoration: TextDecoration.underline,
-                            color: Colors.purple,
+                            color: Color(0xff544cb4),
                           ),),
                           onTap: () {
                               Navigator.pop(context);

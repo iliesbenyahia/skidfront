@@ -73,23 +73,23 @@ class _ressourcesRelationshipsState extends State<ressourcesRelationships> {
 
           return MultiSelectDialogField(items: items,
             title: Text("Relation(s) concernée(s)"),
-            selectedColor: Colors.purple,
+            selectedColor: Color(0xff544cb4),
             decoration: BoxDecoration(
-              color: Colors.purple.withOpacity(0.1),
+              color: Color(0xff544cb4).withOpacity(0.1),
               //borderRadius: BorderRadius.all(Radius.circular(40)),
               // border: Border.all(
-              //   color: Colors.purple,
+              //   color: Color(0xff544cb4),
               //   width: 2,
               // ),
             ),
             buttonIcon: Icon(
               Icons.category,
-              color: Colors.purple,
+              color: Color(0xff544cb4),
             ),
             buttonText: Text(
               "Type(s) de relations concernée(s)",
               style: TextStyle(
-                color: Colors.purple[800],
+                color: Color(0xff544cb4),
                 fontSize: 16,
               ),
             ),
@@ -157,23 +157,23 @@ class _ressourcesRelationshipsState extends State<ressourcesRelationships> {
             List<Map<String, dynamic>> relationships = [];
             return MultiSelectDialogField(items: items,
               title: Text("Relation(s) concernée(s)"),
-              selectedColor: Colors.purple,
+              selectedColor: Color(0xff544cb4),
               decoration: BoxDecoration(
-                color: Colors.purple.withOpacity(0.1),
+                color: Color(0xff544cb4).withOpacity(0.1),
                 //borderRadius: BorderRadius.all(Radius.circular(40)),
                 // border: Border.all(
-                //   color: Colors.purple,
+                //   color: Color(0xff544cb4),
                 //   width: 2,
                 // ),
               ),
               buttonIcon: Icon(
                 Icons.category,
-                color: Colors.purple,
+                color: Color(0xff544cb4),
               ),
               buttonText: Text(
                 "Type(s) de relations concernée(s)",
                 style: TextStyle(
-                  color: Colors.purple[800],
+                  color: Color(0xff544cb4)[800],
                   fontSize: 16,
                 ),
               ),

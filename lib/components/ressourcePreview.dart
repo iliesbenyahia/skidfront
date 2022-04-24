@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skidressourcesrel/data/models/ressource.dart';
+import '../components/ressourcesRelationshipsBadges.dart';
 
 class ressourcePreview extends StatefulWidget {
   final Ressource ressource;
@@ -25,17 +26,27 @@ class _ressourcePreviewState extends State<ressourcePreview> {
           elevation: 2,
           child: ListTile(
               onTap: () {
-                print(widget.ressource.label);
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/ressource', arguments : widget.ressource );
               },
-              title: Text(widget.ressource.label),
-              subtitle: Text(
-                  widget.ressource.description!,
-                overflow: TextOverflow.fade,
-                maxLines: 3,
+              title:
+                  Row(
+                    children: [
+                      Text(widget.ressource.label),
+                      relationshipBadges(relationships: widget.ressource.relationshipsArray)
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  ),
 
-              ),
+              subtitle:
+                    Text(
+                      widget.ressource.description!,
+                      overflow: TextOverflow.fade,
+                      maxLines: 3,
+
+                    ),
+
+
               )
           )
       );

@@ -47,15 +47,28 @@ class _MenuState extends State<Menu> {
               // Important: Remove any padding from the ListView.
               padding: EdgeInsets.zero,
               children: [
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                  ),
-                  child: Column(children: [
-                    primaryLogo(),
-                   // Text(mail + " " + firstname + " " + lastname)
-                  ],),
+              SizedBox(
+              height: 258,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
                 ),
+                child: Column(children: [
+                  Image.asset("assets/skidlogo.png",scale: 3,),
+                  primaryLogo(),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // Text(mail + " " + firstname + " " + lastname)
+                ),
+                margin: EdgeInsets.all(5),
+                padding: EdgeInsets.all(0.0),
+              ),
+
+              ),
+
+
                 ListTile(
+                  leading: Icon(Icons.account_circle_outlined),
                   title: const Text('Mon compte'),
                   onTap: () {
                     // Update the state of the app
@@ -65,6 +78,7 @@ class _MenuState extends State<Menu> {
                   },
                 ),
                 ListTile(
+                  leading: Icon(Icons.search),
                   title: const Text('Trouver une ressource'),
                   onTap: () {
                     // Update the state of the app
@@ -75,6 +89,7 @@ class _MenuState extends State<Menu> {
                   },
                 ),
                 ListTile(
+                  leading: Icon(Icons.drive_folder_upload),
                   title: const Text('Partager une ressource'),
                   onTap: () {
                     // Update the state of the app
@@ -82,6 +97,28 @@ class _MenuState extends State<Menu> {
                     // Then close the drawer
                     Navigator.pop(context);
                     Navigator.pushNamed(context, '/upload');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.bookmark_border),
+                  title: const Text('Mes ressources'),
+                  onTap: () {
+                    // Update the state of the app
+                    // ...
+                    // Then close the drawer
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/ressource');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.favorite_outlined),
+                  title: const Text('Mes favoris'),
+                  onTap: () {
+                    // Update the state of the app
+                    // ...
+                    // Then close the drawer
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, '/ressource');
                   },
                 ),
                 ListTile(
@@ -97,6 +134,7 @@ class _MenuState extends State<Menu> {
 
               ],
             ),
+
           );
         }
       },

@@ -18,13 +18,24 @@ class _ressourcesSearchState extends State<ressourcesSearch> {
     return Scaffold(
       appBar: AppBar(title: Text("Trouver une ressource"),),
       drawer: Menu(),
-      body:
-         Column(
-           children: [
-             searchBar(),
-             ressourcesList()
-           ],
-        ),
+      body: new Stack(
+        children: [
+          new Container(
+            decoration: new BoxDecoration(
+              image: new DecorationImage(image: new AssetImage("skid.png"), fit: BoxFit.contain, opacity: 0.1),
+            ),
+          ),
+          Column(
+            children: [
+              searchBar(),
+              ressourcesList()
+            ],
+          ),
+
+        ],
+
+      ),
+
 
   );
 

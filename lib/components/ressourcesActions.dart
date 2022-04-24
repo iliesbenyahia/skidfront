@@ -17,7 +17,7 @@ class _ressourceActionsState extends State<ressourceActions> {
         IconButton(
           icon : Icon(
                   Icons.report,
-                  color: Colors.purple,
+                  color: Color(0xff544cb4),
                 ),
           onPressed: () {},
           iconSize: 50,
@@ -26,7 +26,7 @@ class _ressourceActionsState extends State<ressourceActions> {
         IconButton(
           icon : Icon(
             Icons.star_border,
-            color: Colors.purple,
+            color: Color(0xff544cb4),
           ),
           onPressed: () {},
           iconSize: 50,
@@ -35,7 +35,7 @@ class _ressourceActionsState extends State<ressourceActions> {
         IconButton(
           icon : Icon(
             Icons.download_outlined,
-            color: Colors.purple,
+            color: Color(0xff544cb4),
           ),
           onPressed: () {},
           iconSize: 50,
@@ -44,7 +44,7 @@ class _ressourceActionsState extends State<ressourceActions> {
         IconButton(
           icon : Icon(
             Icons.comment,
-            color: Colors.purple,
+            color: Color(0xff544cb4),
           ),
           onPressed: () {},
           iconSize: 50,

@@ -101,7 +101,7 @@ class _ressourceState extends State<ressource> {
                   IconButton(
                     icon : Icon(
                       Icons.report,
-                      color: Colors.purple,
+                      color: Color(0xff544cb4),
                     ),
                     onPressed: () {},
                     iconSize: 50,
@@ -110,7 +110,7 @@ class _ressourceState extends State<ressource> {
                   IconButton(
                     icon : Icon(
                       ressourceCard.getRessource!.isFav == 1 ? Icons.star_outlined : Icons.star_border,
-                      color: ressourceCard.getRessource!.isFav == 1 ? Colors.yellow : Colors.purple,
+                      color: ressourceCard.getRessource!.isFav == 1 ? Colors.yellow : Color(0xff544cb4),
                     ),
                     onPressed: () async {
                       if(ressourceCard.getRessource!.isFav == 1){
@@ -153,7 +153,7 @@ class _ressourceState extends State<ressource> {
                   IconButton(
                     icon : Icon(
                       Icons.download_outlined,
-                      color: Colors.purple,
+                      color: Color(0xff544cb4),
                     ),
                     onPressed: () async {
 
@@ -173,7 +173,7 @@ class _ressourceState extends State<ressource> {
                             msgMaxLines: 2,
                             progressType: ProgressType.normal,
                             completed: Completed(completedMsg: "Ressource téléchargée !"),
-                            progressValueColor: Colors.purple,
+                            progressValueColor: Color(0xff544cb4),
                             progressBgColor: Colors.white70,
 
                         );
@@ -212,7 +212,7 @@ class _ressourceState extends State<ressource> {
                   IconButton(
                     icon : Icon(
                       Icons.comment,
-                      color: Colors.purple,
+                      color: Color(0xff544cb4),
                     ),
                     onPressed: () {},
                     iconSize: 50,
